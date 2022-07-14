@@ -8,20 +8,21 @@ var cors = require("cors");
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var blogsRouter = require("./routes/blogs");
+var adminRouter = require("./routes/admin");
 
 var app = express();
-var { mongoConnect } = require('./routes/mongo');
+var { mongoConnect } = require("./mongo.js");
 mongoConnect();
-
-// view engine setup
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "ejs");
 
 app.use(
   cors({
     origin: "http://localhost:3000",
   })
 );
+
+// view engine setup
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "jade");
 
 app.use(logger("dev"));
 app.use(express.json());
@@ -32,6 +33,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/blogs", blogsRouter);
+app.use("/admin", adminRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
