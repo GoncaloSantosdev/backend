@@ -6,7 +6,7 @@ const { serverCheckBlogIsValid } = require("../utils/validation");
 
 router.get("/blog-list", async (req, res, next) => {
   try {
-    const collection = await blogsDB().collection("posts50");
+    const collection = await blogsDB().collection("posts");
     const blogs = await collection
       .find({})
       .sort({ id: -1 })
@@ -34,7 +34,7 @@ router.put("/edit-blog", async (req, res) => {
         .json({ message: "Blog update is not valid", success: false });
       return;
     }
-    const collection = await blogsDB().collection("posts50");
+    const collection = await blogsDB().collection("posts");
     const blogId = Number(req.body.id);
     const ogBlog = await collection.findOne({ id: blogId });
     if (!ogBlog) {
@@ -62,7 +62,7 @@ router.put("/edit-blog", async (req, res) => {
 router.delete("/delete-blog/:blogId", async (req, res) => {
   try {
     const blogId = Number(req.params.blogId);
-    const collection = await blogsDB().collection("posts50");
+    const collection = await blogsDB().collection("posts");
     const blogToDelete = await collection.deleteOne({ id: blogId });
     if (blogToDelete.deletedCount === 1) {
       res.json({ message: "Successfully Deleted", success: true }).status(200);

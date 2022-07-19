@@ -16,7 +16,7 @@ router.get("/all-blogs", async (req, res) => {
     const sortOrder = req.query.sortOrder === "ASC" ? 1 : -1;
     const filterField = req.query.filterField;
     const filterValue = req.query.filterValue;
-    const collection = await blogsDB().collection("posts50");
+    const collection = await blogsDB().collection("posts");
     let filterObj = {};
     if (filterField && filterValue) {
       filterObj = { [filterField]: filterValue };
@@ -50,7 +50,7 @@ router.post("/blog-submit", async (req, res) => {
       return;
     }
 
-    const collection = await blogsDB().collection("posts50");
+    const collection = await blogsDB().collection("posts");
     const sortedBlogArr = await collection.find({}).sort({ id: 1 }).toArray();
     const lastBlog = sortedBlogArr[sortedBlogArr.length - 1];
     const title = req.body.title;
@@ -80,7 +80,7 @@ router.post("/blog-submit", async (req, res) => {
 router.get("/single-blog/:blogId", async (req, res) => {
   try {
     const blogId = Number(req.params.blogId);
-    const collection = await blogsDB().collection("posts50");
+    const collection = await blogsDB().collection("posts");
     const blogPost = await collection.findOne({ id: blogId });
     res.status(200).json({ message: blogPost, success: true });
   } catch (error) {

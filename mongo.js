@@ -14,11 +14,9 @@ async function mongoConnect() {
     console.error(error);
   }
 }
-
 function blogsDB() {
   return db;
 }
-
 module.exports = {
   mongoConnect,
   blogsDB,
